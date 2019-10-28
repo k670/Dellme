@@ -8,10 +8,10 @@ public class Dellme {
 
     public static void main(String[] args) {
 
-
         String commonKey = UUID.randomUUID().toString();
         String commonNestedKey = UUID.randomUUID().toString();
         String commonKey2 = UUID.randomUUID().toString();
+
 
 /*
 //dont work in Java 8
@@ -60,8 +60,7 @@ public class Dellme {
     }
 
     private static Map<String, Object> merge(Map<String, Object> first, Map<String, Object> second) {
-        Map<String,Object> resMap = new HashMap<>();
-        
+        Map<String, Object> resMap = new HashMap<>();
 /*        //save all data
         //dont work when first map contain HashSet value
         first.forEach(resMap::put);
@@ -81,13 +80,21 @@ public class Dellme {
             }
         });*/
 
-//merge all maps in value
+
         first.forEach(resMap::put);
-        second.forEach((k,v)->{
-            if(resMap.containsKey(k)&&v instanceof Map<?, ?>&&resMap.get(k) instanceof Map<?, ?>){
-                resMap.put(k,merge((Map) resMap.get(k), (Map)v));
-            }else {
-                resMap.put(k,v);
+        second.forEach((k, v) -> {
+            if (resMap.containsKey(k) && v instanceof Map<?, ?> && resMap.get(k) instanceof Map<?, ?>) {
+                Object oldV = resMap.get(k);
+                Object nextV = ((Map) v).keySet().iterator().next();
+                Object nextOldV = ((Map) oldV).keySet().iterator().next();
+                if (nextV instanceof String && nextOldV instanceof String) {
+
+                    resMap.put(k, merge((Map<String, Object>) oldV, (Map<String, Object>) v));
+                } else {
+                    resMap.put(k, v);
+                }
+            } else {
+                resMap.put(k, v);
             }
         });
 

@@ -1,7 +1,9 @@
 package com.playtika.maas;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 
 public class Dellme {
@@ -55,7 +57,7 @@ public class Dellme {
                 put(UUID.randomUUID().toString(), 42);
             }});
         }});
-
+        
         System.out.println(merge(map1, map2));
     }
 
@@ -85,10 +87,7 @@ public class Dellme {
         second.forEach((k, v) -> {
             if (resMap.containsKey(k) && v instanceof Map<?, ?> && resMap.get(k) instanceof Map<?, ?>) {
                 Object oldV = resMap.get(k);
-                Object nextV = ((Map) v).keySet().iterator().next();
-                Object nextOldV = ((Map) oldV).keySet().iterator().next();
-                if (nextV instanceof String && nextOldV instanceof String) {
-
+                if (keysIsStringDetect(((Map) v).keySet())&&keysIsStringDetect(((Map) oldV).keySet()) ) {
                     resMap.put(k, merge((Map<String, Object>) oldV, (Map<String, Object>) v));
                 } else {
                     resMap.put(k, v);
@@ -99,6 +98,16 @@ public class Dellme {
         });
 
         return resMap;
+    }
+
+    private static boolean keysIsStringDetect(Set keys) {
+        Iterator iterator = keys.iterator();
+        while (iterator.hasNext()) {
+            if (iterator.next().getClass() != String.class) {
+                return false;
+            }
+        }
+        return true;
     }
 }
 

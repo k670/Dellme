@@ -14,11 +14,6 @@ public class Dellme {
         String commonKey2 = UUID.randomUUID().toString();
 
 /*
-        String commonKey = "commonKey";
-        String commonNestedKey = "commonNestedKey";
-        String commonKey2 = "commonKey2";*/
-
-/*
 //dont work in Java 8
       Map<String, Object> map1 = Map
                 .of(
@@ -66,6 +61,7 @@ public class Dellme {
 
     private static Map<String, Object> merge(Map<String, Object> first, Map<String, Object> second) {
         Map<String,Object> resMap = new HashMap<>();
+        
 /*        //save all data
         //dont work when first map contain HashSet value
         first.forEach(resMap::put);
@@ -85,8 +81,7 @@ public class Dellme {
             }
         });*/
 
-
-
+//merge all maps in value
         first.forEach(resMap::put);
         second.forEach((k,v)->{
             if(resMap.containsKey(k)&&v instanceof Map<?, ?>&&resMap.get(k) instanceof Map<?, ?>){

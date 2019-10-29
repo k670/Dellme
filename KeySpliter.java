@@ -23,14 +23,12 @@ public class KeySpliter {
     private static Map<String, Object> splitKey(Map<String, Object> map) {
         Map<String, Object> resMap = new HashMap<>();
         map.forEach((k, v) -> {
-
             String[] splitStr = k.split(Pattern.quote("."));
-            int length = splitStr.length-1;
+            int length = splitStr.length - 1;
             Map<String, Object> lastMap = resMap;
-
             for (int i = 0; i <= length; i++) {
-                if (lastMap.containsKey(splitStr[i])&&(i<length)&&lastMap.get(splitStr[i]) instanceof Map) {
-                        lastMap = (Map<String, Object>) lastMap.get(splitStr[i]);
+                if (lastMap.containsKey(splitStr[i]) && (i < length) && lastMap.get(splitStr[i]) instanceof Map) {
+                    lastMap = (Map<String, Object>) lastMap.get(splitStr[i]);
                 } else {
                     if (i == length) {
                         lastMap.put(splitStr[i], v);
